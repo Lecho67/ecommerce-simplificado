@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,8 @@ SECRET_KEY = 'django-insecure-w3j4svw)9dod375rku3+9t7ml#mx3dt_t$w5tdn&(3db-jz2pr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend', '.amazonaws.com', '.render.com', '.railway.app'] # Añade aquí los dominios de tu despliegue si los conoces
+# En desarrollo con Docker, 'backend' es el nombre del servicio, y 'localhost' es para el acceso desde tu navegador.
 
 
 # Application definition
@@ -78,13 +80,17 @@ WSGI_APPLICATION = 'ecommerce_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3', # Utiliza la ruta base del proyecto
+    # }
+    'default': { # COMENTAR ESTO TEMPORALMENTE
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'mysecretpassword',
         'HOST': 'db',
-        'PORT': '5432',
+        'PORT': '5432', # No es necesario el puerto para SQLite
     }
 }
 
@@ -124,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
